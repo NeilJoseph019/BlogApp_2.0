@@ -22,3 +22,10 @@ def userDetails(request):
     instance = User.objects.filter(username=user)
     serializer = UserSerializer(instance=instance, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def userName(request, pk):
+    instance = User.objects.get(pk=pk)
+    serializer = UserSerializer(instance=instance)
+    return Response(serializer.data)
