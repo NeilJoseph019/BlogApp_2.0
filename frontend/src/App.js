@@ -5,6 +5,7 @@ import Welcome from './pages/welcome/Welcome'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register';
 import Home from './pages/home/Home';
+import UserPosts from './components/userPosts/UserPosts';
 
 function App() {
   return (  
@@ -22,9 +23,10 @@ function App() {
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
           <Route path='/home' element={<Home/>} />
+          <Route path='/user_posts' element={<UserPosts/>}/>
         </Routes>
     </div>
-    </Router>
+    </Router> 
     
   );
 }

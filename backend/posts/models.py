@@ -13,7 +13,7 @@ class Post(models.Model):
         return f"{self.description}"
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username')
     comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_desc = models.TextField(max_length=200)
 

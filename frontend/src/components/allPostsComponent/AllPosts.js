@@ -6,9 +6,9 @@ const AllPosts = (props) => {
     const postData = props.posts
     
     const formatDate = (dateString) =>{
-        const date = new Date(dateString);
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        return date.toLocaleDateString('en-IE', options);
+        const date = new Date(dateString)
+        const options = { day: 'numeric', month: 'short', year: 'numeric' }
+        return date.toLocaleDateString('en-IE', options)
       }
 
     const post_details = {

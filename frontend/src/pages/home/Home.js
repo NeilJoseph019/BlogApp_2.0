@@ -1,11 +1,12 @@
 import axios from 'axios'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useSelector } from 'react-redux'
-// import { Link } from 'react-router'
+
 
 import { Card, Form, InputGroup, Button } from 'react-bootstrap'
 
 import AllPosts from '../../components/allPostsComponent/AllPosts'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
 
@@ -45,51 +46,98 @@ const Home = () => {
       
   },[access])
 
-  useEffect(()=>{
-
-    const fetchPosts = async()=>{
-      const config = {
-        headers: {
-          'Content-Type' : 'application/json',
-          'Authorization' : `Bearer ${access}`
-        }
-      }
-
-      try{
-        const response = await axios.get('api/posts/', config)
-        setFetchAllPosts(response.data)
-      }
-      catch(error){
-        console.log(error.message)
+  const fetchPosts = useCallback( async()=>{
+    const config = {
+      headers: {
+        'Content-Type' : 'application/json',
+        'Authorization' : `Bearer ${access}`
       }
     }
+
+    try{
+      const response = await axios.get('api/posts/', config)
+      setFetchAllPosts(response.data)
+    }
+    catch(error){
+      console.log(error.message)
+    }
+  },[access])
+
+
+  useEffect(()=>{
+
     fetchPosts()
     
-  },[access])
+  },[access, fetchPosts])
 
   const onPostHandler = (event)=>{
       event.preventDefault()
 
-      const formData = new FormData()
+      // For multiple images
 
-      formData.append("post_description", postData.post_description)
-      if (postData.post_image){
-        for (let i=0; i < (postData.post_image.length); i++){
-          formData.append("post_img", [postData.post_image[i]])
-        }
+      // const images = {}
+
+      // if (postData.post_image){
+      //   for (let i=0; i < (postData.post_image.length); i++){
+      //     images[postData.post_image[i].name] = postData.post_image[i]
+      //   }
+      // }
+
+      // OR
+
+      // if (postData.post_image){
+      //   // const imageFiles = Array.from(postData.post_image)
+      // }
+
+      //   // The Array.from() method can also be used to create a 
+      //   // new array from other data structures, such as strings, 
+      //   // sets, maps, or array-like objects. By passing an iterable object 
+      //   // or an array-like object as an argument to Array.from(), 
+      //   // you can create a new array with the same elements as the source object.
+
+
+      //   console.log('uploaded Images: ' ,images)
+      // }
+
+      // console.log('uploaded Images: ' ,images)
+
+      const dataUploaded = {
+        'description' : postData.post_description,
+        'post_image' : (postData.post_image ? postData.post_image[0] : " " )
         
       }
-      
-      console.log(formData.get('post_description'))
-      console.log(formData.get('post_img'))
-      // console.log(formData.get('post_img_1'))
 
-      setPostData({post_description: '', post_image: null })
+      const sendPostData = async()=>{
 
-      if (fileFieldRef.current){
-        fileFieldRef.current.value = ''
+        const config = {
+          headers : {
+            'Content-Type' : 'multipart/form-data',
+            'Authorization' : `Bearer ${access}`
+          }
+        }
+
+        try{
+
+          const response = await axios.post('api/posts/create_new_post', dataUploaded, config)
+
+          if (response.status === 200){
+
+              setPostData({post_description: '', post_image: null })
+
+              if (fileFieldRef.current){
+                fileFieldRef.current.value = ''
+              }
+
+              fetchPosts()
+          } 
+        }
+        catch(error){
+          console.log(error.message)
+        }
+
       }
-
+      
+      sendPostData()
   }
   
   return (
@@ -102,9 +150,9 @@ const Home = () => {
           <Card.Body>
             <h3>Hi, {user.first_name}</h3>
             <h5>Email: {user.email}</h5>
-            {/* <Link to=''> */}
+            <Link to={'/user_posts'}>
               <Button variant="light">Your Posts</Button>
-            {/* </Link> */}
+            </Link>
           </Card.Body>
         </Card>
       </section>
@@ -127,7 +175,8 @@ const Home = () => {
                   Post
                 </Button>
                 <Form.Control
-                  as="textarea"
+                  as="textarea" 
+                  required
                   value={postData.post_description}
                   onChange={(e)=> setPostData({...postData, post_description : e.target.value})}
                 />
@@ -136,7 +185,7 @@ const Home = () => {
                 <Form.Label>Upload Image</Form.Label>
                 <Form.Control 
                 type="file" 
-                multiple 
+                // multiple 
                 ref={fileFieldRef} 
                 onChange={(e)=> setPostData({...postData, post_image : e.target.files})}/>
               </Form.Group>
@@ -144,6 +193,7 @@ const Home = () => {
           </Card.Body>
         </Card>
       </section>
+      
       <section style={{ display:'flex', justifyContent:'center', alignItems:'center', marginBottom:'3rem'}}>
         <Card
         border='dark'
@@ -157,32 +207,6 @@ const Home = () => {
             </h5>
           </Card.Header>
           <Card.Body>
-            <div>
-              <Card
-              border='dark'
-              bg='light'
-              text='dark' 
-              style={{width:'33rem', marginTop:'1rem'}}>
-                <Card.Header>
-                  <div style={{ display:'flex', justifyContent: 'space-between'}}>
-                    <p>UserName</p> <p>30-May-2023</p>
-                  </div>
-                </Card.Header>
-                <Card.Body>
-                  <Card.Title>Special title treatment</Card.Title>
-                  <Card.Text>
-                    With supporting text below as a natural lead-in to additional content.
-                  </Card.Text>
-                  <Button variant="primary">Edit</Button>
-                  <div style={{ display:'flex', justifyContent: 'space-around'}}>
-                    <div>
-                      <p>Comment - 23</p>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </div>
-            
             <div>
               {
                 fetchAllPosts.map((posts)=>{

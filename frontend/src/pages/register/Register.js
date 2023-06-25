@@ -62,8 +62,6 @@ const Register = () => {
     const onSubmitHandler = async(event)=>{
         event.preventDefault()
 
-        console.log(loginInputState)
-
         try{
             const config = {
                 headers : {

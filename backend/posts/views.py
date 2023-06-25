@@ -15,7 +15,33 @@ def allPosts(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def userPosts(request):
+    user = request.user 
+    instance = Post.objects.filter(user=user)
+    serializer = PostSerializer(instance=instance, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def postComments(request):
     data = request.data
     serializer = CommentSerializer(data=data)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createNewPost(request):
+    
+    data = {
+        "user" : request.user,
+        "description" : request.data['description'],
+        "post_image" : request.FILES.get('post_image', None)  # This is the  method to get the files from the request data.
+    }
+
+    
+    serializer = PostSerializer(data=data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
     return Response(serializer.data)
