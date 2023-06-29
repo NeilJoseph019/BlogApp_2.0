@@ -9,7 +9,7 @@ from .serializers import PostSerializer, CommentSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def allPosts(request):
-    instance = Post.objects.all()
+    instance = Post.objects.all().order_by('-timestamp')
     serializer = PostSerializer(instance=instance, many=True)
     return Response(serializer.data)
 
@@ -17,7 +17,7 @@ def allPosts(request):
 @permission_classes([IsAuthenticated])
 def userPosts(request):
     user = request.user 
-    instance = Post.objects.filter(user=user)
+    instance = Post.objects.filter(user=user).order_by('-timestamp')
     serializer = PostSerializer(instance=instance, many=True)
     return Response(serializer.data)
 
@@ -40,8 +40,35 @@ def createNewPost(request):
         "post_image" : request.FILES.get('post_image', None)  # This is the  method to get the files from the request data.
     }
 
-    
     serializer = PostSerializer(data=data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
+        return Response(serializer.data)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updatePost(request):
+    id = request.data['id']
+    data = request.data 
+    serializer = PostSerializer(data=data, partial=True)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deletePost(request, id):
+    
+    try: 
+        instance = Post.objects.get(id=id)
+    except instance.DoesNotExist:
+        return Response({'error': 'Task not found.'})
+    serializer = PostSerializer(instance=instance) 
+    instance.delete()
+    # Optionally, you can also delete the task directly from the database
+    # post.delete()
+    return Response(serializer.data)
+    

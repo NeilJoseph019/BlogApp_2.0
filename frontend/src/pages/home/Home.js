@@ -118,7 +118,7 @@ const Home = () => {
 
         try{
 
-          const response = await axios.post('api/posts/create_new_post', dataUploaded, config)
+          const response = await axios.post('api/posts/create_new_post/', dataUploaded, config)
 
           if (response.status === 200){
 
