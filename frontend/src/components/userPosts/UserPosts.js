@@ -1,8 +1,34 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useReducer } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Button, Modal, Form, InputGroup, Toast } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+
+const initialUpdateValState = {
+    description : '',
+    image : null
+}
+
+const updateReducerFunction = (state,action)=>{
+    switch(action.type){
+        case 'DESCRIPTION':
+            return {
+                ...state,
+                description : action.payload
+            } 
+        case 'IMAGE':
+            return {
+                ...state,
+                image : action.payload
+            }
+        default:
+            return "Something went wrong somewhere."
+
+    }
+       
+    
+}
+
 
 const UserPosts = () => {
 
@@ -12,6 +38,9 @@ const UserPosts = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [modalDetails, setModalDetails] = useState({})
     const [deleteToast, setDeleteToast] = useState(false)
+    const [updateToast, setUpdateToast] = useState(false)
+
+    const [updatedVal, dispatchUpdateActions] = useReducer(updateReducerFunction, initialUpdateValState)
 
 
     const dateFormat = (dateString)=>{
@@ -55,8 +84,40 @@ const UserPosts = () => {
         })
     }
 
-    const onUpdateHandler = (e)=>{
-        e.preventDefault()
+    const onUpdateHandler = async(id)=>{
+       
+        const data = {
+            "description" : updatedVal.description,
+            "post_image": updatedVal.image[0]
+        }
+        console.log("data:", data)
+
+        const config = {
+            headers : {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${access}`
+            }
+        }
+
+        try{
+
+            const response = await axios.put(`/api/posts/update_post/${id}`, data, config)
+            if (response.status === 200){
+                setUpdateToast(true)
+                setTimeout(() => {
+                    setUpdateToast(false)
+                  }, 2000);
+                
+                fetchUserPosts()
+            }
+
+        }
+        catch(error){
+            console.log(error.message)
+        }
+
+        handleClose()
+
     }
 
     const onDeleteHandler = async(id)=>{
@@ -100,6 +161,14 @@ const UserPosts = () => {
                 deleteToast === true && (
                     <Toast>
                         <Toast.Body>Your post has been successfully deleted.</Toast.Body>
+                    </Toast>
+                )
+            }
+            
+            {
+                updateToast === true && (
+                    <Toast>
+                        <Toast.Body>Your post has been successfully updated.</Toast.Body>
                     </Toast>
                 )
             }
@@ -194,19 +263,14 @@ const UserPosts = () => {
                 <Modal.Title>Edit post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={onUpdateHandler}>
+                    <Form>
                         <InputGroup className="mb-3" border="dark">
-                            <Button 
-                            type='submit' 
-                            variant="outline-secondary" 
-                            >
-                            Post
-                            </Button>
+                           
                             <Form.Control
                             as="textarea"
                             placeholder={modalDetails.desc}
-                            // value={}
-                            // onChange={}
+                            value={updatedVal.description}
+                            onChange={(e)=> dispatchUpdateActions({type: "DESCRIPTION", payload: e.target.value})}
                             />
                         </InputGroup>
                         
@@ -215,9 +279,8 @@ const UserPosts = () => {
                             <Form.Label>Upload Image</Form.Label>
                             <Form.Control 
                             type="file" 
-                            multiple 
-            
-                            // onChange={}
+                            // multiple 
+                            onChange={(e)=> dispatchUpdateActions({type: 'IMAGE', payload: e.target.files})}
                             />
                         </Form.Group>
                     </Form>
@@ -226,7 +289,7 @@ const UserPosts = () => {
                 <Button variant="danger" onClick={() => onDeleteHandler(modalDetails.id)}>
                     Delete Post
                 </Button>
-                <Button variant="primary" onClick={(handleClose)}>
+                <Button variant="primary" onClick={()=> onUpdateHandler(modalDetails.id)}>
                     Save Changes
                 </Button>
                 </Modal.Footer>
