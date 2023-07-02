@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { Card, Form, FloatingLabel, Button } from 'react-bootstrap'
 
 import axios from 'axios'
@@ -83,9 +83,13 @@ const Register = () => {
 
   return (
     <div >
-        <section style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
+        
+        <section style={{ display:'flex', justifyContent: 'center', alignItems:'center'}}>
             <h3> Welcome to the registeration page</h3>
         </section>
+        <Link to={'/'} style={{ marginLeft: '2rem'}}>
+            <Button>Back</Button>
+        </Link>
         <section style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
             <Card
             border="dark"
