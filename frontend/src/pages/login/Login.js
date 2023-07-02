@@ -46,6 +46,9 @@ const Login = () => {
         <section style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
             <h3> Welcome to the login page</h3>
         </section>
+        <Link to={'/'} style={{ marginLeft: '2rem'}}>
+            <Button>Back</Button>
+        </Link>
         <section style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
             <Card
             border="dark"
