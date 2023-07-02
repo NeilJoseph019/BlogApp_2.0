@@ -50,12 +50,7 @@ def createNewPost(request):
 @permission_classes([IsAuthenticated])
 def updatePost(request, id):
     instance = Post.objects.get(id=id)
-    # data = {
-    #     "description" : request.data['description'],
-    #     "post_image" : request.FILES.get('post_image', None)
-    # }
     data = request.data
-    print(f"DATA: {data}")
     serializer = PostSerializer(instance=instance, data=data, partial=True)
     if serializer.is_valid(raise_exception=True):
         serializer.save()

@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <div>
         <section style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
-            <h3> Welcome to the registeration page</h3>
+            <h3> Welcome to the login page</h3>
         </section>
         <section style={{ display:'flex', justifyContent:'center', alignItems:'center'}}>
             <Card

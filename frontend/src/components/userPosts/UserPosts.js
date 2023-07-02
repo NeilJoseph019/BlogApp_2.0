@@ -88,7 +88,7 @@ const UserPosts = () => {
        
         const data = {
             "description" : updatedVal.description,
-            "post_image": updatedVal.image[0]
+            "post_image": updatedVal.image ? updatedVal.image[0] : ''
         }
         console.log("data:", data)
 
