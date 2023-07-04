@@ -12,31 +12,31 @@ Technologies used for this project are:
 #### Screenshots of the project:
 1. Welcome Page
 
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/fac841d01ab2aa6d65d446fd808e621e1a0d15a5/Screenshot-1.png "welcome page")
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-1.png)
 
 2. Register Page
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-2.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-2.png)
 
 3. Login Page
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-3.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-3.png)
 
 4. Home Page
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-4.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-4.png)
 
 5. Post Example 1
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-5.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-5.png)
 
 6. Post Example 2
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-6.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-6.png)
 
 7. Your Posts Page
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-7.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-7.png)
 
 8. Your Post Example
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-8.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-8.png)
 
 9. Post Edit(Delete and Update post) Functionality
-![alt text](https://github.com/NeilJoseph019/ReadmeStuff/blob/b7c9ee4d796e4521a4d03a36200d03d70be08050/Screenshot-9.png)
+![alt text](https://github.com/NeilJoseph019/BlogApp_2.0/blob/3c7c09fc86db99084c3927195f3d87d25bb31a46/Images/Screenshot-9.png)
 
 ----------------------------------------------------------------------------------------------------------------------------
 ### Stuff learnt while doing this project: (Espically state management for the project)
